@@ -2,7 +2,7 @@
 schemaVersion = "0.0.1"
 
 [package]
-namespace = "Gyztor Mizirath"
+namespace = "Void_Star"
 name = "MyInspectors"
 versionNumber = "1.0.1"
 description = "A Bepis Mod Loader mod that makes Inspectors run as you instead of the host."
