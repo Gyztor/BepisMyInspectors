@@ -14,7 +14,7 @@ ResoniteModding-BepisLoader = "1.6.0"
 
 
 [build]
-icon = "./Icon.webp"
+icon = "./Icon.png"
 readme = "./README.md"
 outdir = "./bin/build"
 
