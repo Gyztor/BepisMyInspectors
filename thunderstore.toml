@@ -8,8 +8,9 @@ versionNumber = "1.0.0"
 description = "A Bepis Mod Loader mod that makes Inspectors run as you instead of the host."
 websiteUrl = "https://github.com/Gyztor/BepisMyInspectors"
 containsNsfwContent = false
+
 [package.dependencies]
-ResoniteModding-BepisLoader = "1.3.0"
+ResoniteModding-BepisLoader = "1.6.0"
 
 
 [build]
