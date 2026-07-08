@@ -32,13 +32,13 @@ namespace MyInspectors
             MyInspectorsEnabled = Config.Bind("MyInspectors", "Enable MyInspectors", true, new ConfigDescription("Enables the MyInspectors mod."));
             Harmony harmony = new Harmony("me.art0007i.MyInspectors");
             Log.LogInfo("MyInspectors Applying Patches");
-            harmony.PatchAll();
+            if (MyInspectorsEnabled.Value) {harmony.PatchAll();}
             MyInspectorsEnabled.SettingChanged += (e, s) =>
             {
                 if (MyInspectorsEnabled.Value)
                 {
                     Log.LogInfo("Applying Inspector Patches");
-                    Harmony.CreateAndPatchAll(typeof(MyInspectors), "me.art0007i.MyInspectors");
+                    harmony.PatchAll();
                 }
                 else
                 {
