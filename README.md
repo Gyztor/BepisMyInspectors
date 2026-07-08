@@ -1,7 +1,7 @@
 # Bepis MyInspectors Port
 [![Thunderstore Badge](https://modding.resonite.net/assets/available-on-thunderstore.svg)](https://thunderstore.io/c/resonite/)
 
-A [Resonite](https://resonite.com/) mod that add toggles for features that really should have them.
+A [Resonite](https://resonite.com/) mod that makes Inspectors owned by you instead of the host. This can help make YOUR Inspectors feel more responsive to you.
 
 ## Installation (Manual)
 1. Install [BepisLoader](https://github.com/ResoniteModding/BepisLoader) for Resonite.
