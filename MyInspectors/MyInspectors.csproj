@@ -4,8 +4,7 @@
     <!--<OutputType>Library</OutputType>-->
     <Version>1.0.0</Version>
     <!--<AppDesignerFolder>Properties</AppDesignerFolder>-->
-    <Authors>art0007i</Authors>
-    <Authors>Gyztor Mizirath</Authors>
+    <Authors>art0007i, Gyztor Mizirath</Authors>
     <RepositoryUrl>https://github.com/Gyztor/BepisMyInspectors</RepositoryUrl>
     <RootNamespace>MyInspectors</RootNamespace>
     <AssemblyTitle>MyInspectors</AssemblyTitle>
