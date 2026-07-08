@@ -18,7 +18,7 @@ class PatchedSyncRef<T> : SyncRef<T>, EditorTargetField where T : class, IWorldE
     }
     protected override bool InternalSetRefID(in RefID id, T prevTarget)
     {
-        if (!config.GetValue(KEY_ENABLE)) return base.InternalSetRefID(id, prevTarget);
+        if (!MyInspectorsEnabled.Value) return base.InternalSetRefID(id, prevTarget);
 
         RefID value = id;
         bool sync = false;

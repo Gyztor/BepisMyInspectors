@@ -1,0 +1,40 @@
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "Gyztor Mizirath"
+name = "MyInspectors"
+versionNumber = "1.0.0"
+description = "A Bepis Mod Loader mod that makes Inspectors run as you instead of the host."
+websiteUrl = "https://github.com/Gyztor/BepisMyInspectors"
+containsNsfwContent = false
+[package.dependencies]
+ResoniteModding-BepisLoader = "1.3.0"
+
+
+[build]
+icon = "./Icon.webp"
+readme = "./README.md"
+outdir = "./bin/build"
+
+[[build.copy]]
+source = "./LICENSE.txt"
+target = "/"
+
+
+[[build.copy]]
+source = "./MyInspectors/bin/Release/MyInspectors.dll"
+target = "plugins/MyInspectors/"
+
+[[build.copy]]
+source = "./MyInspectors/bin/Release/MyInspectors.pdb"
+target = "plugins/MyInspectors/"
+
+[publish]
+repository = "https://thunderstore.io"
+communities = ["resonite"]
+
+[publish.categories]
+resonite = []
+
+

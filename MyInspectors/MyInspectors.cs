@@ -5,7 +5,11 @@ using FrooxEngine.ProtoFlux.Runtimes.Execution.Nodes;
 using FrooxEngine.ProtoFlux.Runtimes.Execution.Nodes.FrooxEngine.Slots;
 using FrooxEngine.UIX;
 using HarmonyLib;
-using ResoniteModLoader;
+using BepInEx;
+using BepInEx.Configuration;
+using BepInEx.Logging;
+using BepInEx.NET.Common;
+using BepInExResoniteShim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,49 +20,36 @@ using static FrooxEngine.UserInspector;
 
 namespace MyInspectors
 {
-    public class MyInspectors : ResoniteMod
+    [ResonitePlugin(PluginMetadata.GUID, PluginMetadata.NAME, PluginMetadata.VERSION, PluginMetadata.AUTHORS, PluginMetadata.REPOSITORY_URL)]
+    [BepInDependency(BepInExResoniteShim.PluginMetadata.GUID)]
+    public class MyInspectors : BasePlugin
     {
-        public override string Name => "MyInspectors";
-        public override string Author => "art0007i";
-        public override string Version => "2.1.1";
-        public override string Link => "https://github.com/art0007i/MyInspectors/";
-
-        public static ModConfiguration config { get; private set; }
-
-        [AutoRegisterConfigKey]
-        public static ModConfigurationKey<bool> KEY_ENABLE = new("enable", "Untick to disable the mod.", () => true);
-
-
-        public override void OnEngineInit()
+        internal new static ManualLogSource Log = null!;
+        internal static ConfigEntry<bool> MyInspectorsEnabled;
+        public override void Load()
         {
+            Log = base.Log;
+            MyInspectorsEnabled = Config.Bind("MyInspectors", "Enable MyInspectors", true, new ConfigDescription("Enables the MyInspectors mod."));
             Harmony harmony = new Harmony("me.art0007i.MyInspectors");
-
-            config = GetConfiguration();
-            if (config.GetValue(KEY_ENABLE))
+            Log.LogInfo("MyInspectors Applying Patches");
+            harmony.PatchAll();
+            MyInspectorsEnabled.SettingChanged += (e, s) =>
             {
-                Debug("Applying Patches");
-                harmony.PatchAll();
-            }
-
-            config.OnThisConfigurationChanged += e =>
-            {
-                if (e.Key == KEY_ENABLE)
+                if (MyInspectorsEnabled.Value)
                 {
-                    if (e.Config.GetValue(KEY_ENABLE))
-                    {
-                        Debug("Applying Patches");
-                        harmony.PatchAll();
-                    }
-                    else
-                    {
-                        Debug("Removing Patches");
-                        harmony.UnpatchAll("me.art0007i.MyInspectors");
-                    }
+                    Log.LogInfo("Applying Inspector Patches");
+                    Harmony.CreateAndPatchAll(typeof(MyInspectors), "me.art0007i.MyInspectors");
+                }
+                else
+                {
+                    Log.LogInfo("Removing Inspector Patches");
+                    Harmony.UnpatchID("me.art0007i.MyInspectors");
                 }
             };
         }
-        static FieldInfo _targetContainer = AccessTools.Field(typeof(WorkerInspector), "_targetContainer");
+static FieldInfo _targetContainer = AccessTools.Field(typeof(WorkerInspector), "_targetContainer");
         static ConditionalWeakTable<UserInspector, UserInspectorState> userInspectorStates = new();
+        
         // patching 'hot' code. but like idk how else to do it
         [HarmonyPatch(typeof(SceneInspector), "OnAwake")]
         class StupidInspectorFixupPatch
@@ -349,7 +340,7 @@ namespace MyInspectors
                         __result = worker is UserComponent;
                         break;
                     case View.Streams:
-                        if (worker is Stream stream) __result = stream.GroupIndex == state.StreamGroup;
+                        if (worker is FrooxEngine.Stream stream) __result = stream.GroupIndex == state.StreamGroup;
                         else __result = false;
                         break;
                     case View.User:
