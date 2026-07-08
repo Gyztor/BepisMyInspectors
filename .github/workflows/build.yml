@@ -44,4 +44,4 @@ jobs:
                     name: MyInspectors-${{ steps.info.outputs.version }}-${{ steps.info.outputs.sha_short }}
                     path: |
                         ./bin/dist/*.dll
-                        ./build/*.zip
+                        ./bin/build/*.zip
